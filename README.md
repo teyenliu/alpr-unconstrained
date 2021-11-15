@@ -1,5 +1,21 @@
 # ALPR in Unscontrained Scenarios
 
+## (Modification)
+
+**The way to process a video which will replace any car plate with a given image content.**
+
+```
+$ python license-plate-replacement.py --video cars_mountain_short.mov --replace src/hello.PNG --output output1.avi
+$ python license-plate-replacement.py --video cars_mountain.mp4 --replace src/hello.PNG --output output2.avi
+```
+
+**The way to process an image which will replace a kanban with a given image content.**
+
+```
+$ cd src
+$ transform_example.py --image ./ad.jpg --coords "[(276,113), (837,207), (851,389), (259,344)]"
+```
+
 ## Introduction
 
 This repository contains the author's implementation of ECCV 2018 paper "License Plate Detection and Recognition in Unconstrained Scenarios".
