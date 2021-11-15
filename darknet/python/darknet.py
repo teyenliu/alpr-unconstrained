@@ -142,7 +142,40 @@ def detect(net, meta, image, thresh=.5, hier_thresh=.5, nms=.45):
     free_image(im)
     free_detections(dets, num)
     return res,wh
-    
+
+def array_to_image(arr):
+    arr = arr.transpose(2,0,1)
+    c = arr.shape[0]
+    h = arr.shape[1]
+    w = arr.shape[2]
+    arr = (arr/255.0).flatten()
+    data = c_array(c_float, arr)
+    im = IMAGE(w,h,c,data)
+    return im
+
+def detect_frame(net, meta, frame, thresh=.5, hier_thresh=.5, nms=.45):
+    #im = load_image(image, 0, 0)
+    im = array_to_image(frame)
+    rgbgr_image(im)
+    num = c_int(0)
+    pnum = pointer(num)
+    predict_image(net, im)
+    dets = get_network_boxes(net, im.w, im.h, thresh, hier_thresh, None, 0, pnum)
+    num = pnum[0]
+    if (nms): do_nms_obj(dets, num, meta.classes, nms);
+
+    res = []
+    for j in range(num):
+        for i in range(meta.classes):
+            if dets[j].prob[i] > 0:
+                b = dets[j].bbox
+                res.append((meta.names[i], dets[j].prob[i], (b.x, b.y, b.w, b.h)))
+    res = sorted(res, key=lambda x: -x[1])
+    wh = (im.w,im.h)
+    #free_image(im)
+    #free_detections(dets, num)
+    return res,wh
+
 if __name__ == "__main__":
     #net = load_net("cfg/densenet201.cfg", "/home/pjreddie/trained/densenet201.weights", 0)
     #im = load_image("data/wolf.jpg", 0, 0)

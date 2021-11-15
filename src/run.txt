@@ -1,0 +1,1 @@
+python transform_example.py --image ../ad.jpg --coords "[(276,113), (837,207), (851,389), (259,344)]"

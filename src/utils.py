@@ -7,7 +7,7 @@ from glob import glob
 
 
 def im2single(I):
-	assert(I.dtype == 'uint8')
+	#assert(I.dtype == 'uint8')
 	return I.astype('float32')/255.
 
 

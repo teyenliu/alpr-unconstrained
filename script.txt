@@ -1,0 +1,2 @@
+python license-plate-replacement.py --video cars_mountain_short.mov --replace src/hello.PNG --output output1.avi
+python license-plate-replacement.py --video cars_mountain.mp4 --replace src/hello.PNG --output output2.avi

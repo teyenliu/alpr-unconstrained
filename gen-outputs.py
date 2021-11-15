@@ -8,6 +8,9 @@ from src.utils 					import crop_region, image_files_from_folder
 from src.drawing_utils			import draw_label, draw_losangle, write2img
 from src.label 					import lread, Label, readShapes
 
+from src.transform import four_point_transform
+from src.transform import four_point_transform_and_replacement
+
 from pdb import set_trace as pause
 
 
@@ -46,6 +49,16 @@ for img_file in img_files:
 				pts = Llp_shapes[0].pts*lcar.wh().reshape(2,1) + lcar.tl().reshape(2,1)
 				ptspx = pts*np.array(I.shape[1::-1],dtype=float).reshape(2,1)
 				draw_losangle(I,ptspx,RED,3)
+
+                                ###Danny Modification###
+                                rep_image = cv2.imread("src/hello.PNG")
+                                reorder_ptspx = np.ones((4,2))
+                                for i in range(4):
+                                    for j in range(2):
+                                        reorder_ptspx[i][j]=ptspx[j][i]
+                                reverse_warped = four_point_transform_and_replacement(I, reorder_ptspx, rep_image)
+                                cv2.imwrite('%s/%s_output_with_advs.png' % (output_dir,bname),reverse_warped)
+                                ########################
 
 				if isfile(lp_label_str):
 					with open(lp_label_str,'r') as f:
