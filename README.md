@@ -2,7 +2,7 @@
 
 ## (Modification)
 
-**The way to process a video which will replace any car plate with a given image content.**
+**The way to process a video which will replace any car license plate with a given image content.**
 
 ```
 $ python license-plate-replacement.py --video cars_mountain_short.mov --replace src/hello.PNG --output output1.avi
